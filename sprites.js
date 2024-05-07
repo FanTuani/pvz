@@ -26,3 +26,64 @@ function createZombie(id) {
     container.appendChild(zombie)
     return zombie
 }
+
+function createPeashooter(onclick) {
+    let peashooter = document.createElement('img')
+    peashooter.src = 'images/Peashooter.gif'
+    peashooter.style.position = 'absolute'
+
+
+    // cancel right click menu
+    document.oncontextmenu = function (event) {
+        event.preventDefault()
+    }
+    // mouse follow
+    document.onmousemove = function (event) {
+        peashooter.style.top = event.y - 35 + 'px'
+        peashooter.style.left = event.x - 30 + 'px'
+    }
+    // plant
+    document.onmousedown = function (event) {
+        document.onmousedown = null
+        document.onmousemove = null
+
+        if (event.button === 0) {
+            let top = peashooter.offsetTop + 55
+            peashooter.route = parseInt(top / 100)
+            if (peashooter.route < 1 || peashooter.route > 5) {
+                container.removeChild(peashooter)
+                return
+            }
+            peashooter.style.top = peashooter.route * 100 + 'px'
+            onclick(peashooter)
+        } else if (event.button === 2) {
+            container.removeChild(peashooter)
+        }
+    }
+
+    container.appendChild(peashooter)
+    return peashooter
+}
+
+function createBullet(peashooter, code, disappear) {
+    let bullet = document.createElement('img')
+    bullet.src = 'images/Bullet.gif'
+    bullet.style.position = 'absolute'
+    bullet.code = new Date().getTime() + 'bullet' + code
+
+    bullet.style.left = peashooter.offsetLeft + 35 + 'px'
+    bullet.style.top = peashooter.offsetTop + 'px'
+
+    bullet.step = () => {
+        if (bullet.src.endsWith('Bullet.gif') && bullet.offsetLeft < 950) {
+            bullet.style.left = bullet.offsetLeft + 4 + 'px'
+        } else {
+            disappear(bullet)
+        }
+    }
+
+    bullets.push(bullet)
+
+    container.appendChild(bullet)
+    return bullet
+}

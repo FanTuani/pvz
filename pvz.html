@@ -30,9 +30,10 @@
 
     <script src="sprites.js"></script>
     <script>
-        let zombies = [], idx = 0, duration = 1000, counter = 0
-        window.onload = function () {
-            setInterval(function () {
+        let zombies = [], bullets = []
+        let idx = 0, duration = 1000, counter = 0
+        window.onload = () => { // = function() {
+            setInterval(() => {
                 addSprites()
                 spritesStep()
                 onHitting()
@@ -66,6 +67,9 @@
             for (let zombie of zombies) {
                 zombie.step()
             }
+            for (let bullet of bullets) {
+                bullet.step()
+            }
         }
 
         function onHitting() {
@@ -74,7 +78,12 @@
     </script>
     <script>
         function drag() {
-            createPeashooter();
+            createPeashooter((peashooter) => {
+                bullets.push(createBullet(peashooter, bullets.length, bullet => {
+                    bullets = bullets.filter(item => item !== bullet)
+                    container.removeChild(bullet)
+                }))
+            });
         }
     </script>
 </html>
