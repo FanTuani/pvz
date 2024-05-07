@@ -48,13 +48,13 @@ function createPeashooter(onclick) {
         document.onmousemove = null
 
         if (event.button === 0) {
-            let top = peashooter.offsetTop + 55
-            peashooter.route = parseInt(top / 100)
-            if (peashooter.route < 1 || peashooter.route > 5) {
+            let top = peashooter.offsetTop - 45
+            peashooter.route = parseInt(top / 100) // emm
+            if (peashooter.route < 0 || peashooter.route > 4) {
                 container.removeChild(peashooter)
                 return
             }
-            peashooter.style.top = peashooter.route * 100 + 'px'
+            peashooter.style.top = (peashooter.route + 1) * 100 + 'px' // emm
             onclick(peashooter)
         } else if (event.button === 2) {
             container.removeChild(peashooter)
@@ -69,6 +69,7 @@ function createBullet(peashooter, code, disappear) {
     let bullet = document.createElement('img')
     bullet.src = 'images/Bullet.gif'
     bullet.style.position = 'absolute'
+    bullet.route = peashooter.route
     bullet.code = new Date().getTime() + 'bullet' + code
 
     bullet.style.left = peashooter.offsetLeft + 35 + 'px'
@@ -76,7 +77,7 @@ function createBullet(peashooter, code, disappear) {
 
     bullet.step = () => {
         if (bullet.src.endsWith('Bullet.gif') && bullet.offsetLeft < 950) {
-            bullet.style.left = bullet.offsetLeft + 4 + 'px'
+            bullet.style.left = bullet.offsetLeft + 3 + 'px'
         } else {
             disappear(bullet)
         }
@@ -86,4 +87,16 @@ function createBullet(peashooter, code, disappear) {
 
     container.appendChild(bullet)
     return bullet
+}
+
+function createHead(zombie) {
+    let head = document.createElement('img')
+    head.src = 'images/ZombieHead.gif'
+    head.style.position = 'absolute'
+
+    head.style.left = zombie.offsetLeft + 'px'
+    head.style.top = zombie.offsetTop + 'px'
+
+    container.appendChild(head)
+    return head
 }

@@ -30,8 +30,9 @@
 
     <script src="sprites.js"></script>
     <script>
-        let zombies = [], bullets = []
+        let zombies = [], bullets = [], shooters = []
         let idx = 0, duration = 1000, counter = 0
+
         window.onload = () => { // = function() {
             setInterval(() => {
                 addSprites()
@@ -72,17 +73,59 @@
             }
         }
 
-        function onHitting() {
-
+        function hitZombie(bullet) {
+            for (let zombie of zombies) {
+                if (bullet.route === zombie.route && bullet.offsetLeft - 60 > zombie.offsetLeft) {
+                    zombie.blood--;
+                    if (zombie.blood === 0) {
+                        let head = createHead(zombie)
+                        zombie.src = 'images/ZombieLostHead.gif'
+                        setTimeout(() => {
+                            zombie.src = 'images/ZombieDie.gif'
+                            container.removeChild(head)
+                        }, 1000)
+                        setTimeout(() => {
+                            zombies = zombies.filter(item => item !== zombie)
+                            container.removeChild(zombie)
+                        }, 1000)
+                    } else {
+                        zombie.style.opacity = 0.7
+                        setTimeout(() => {
+                            zombie.style.opacity = 1
+                        }, 100)
+                    }
+                    return true
+                }
+            }
+            return false
         }
-    </script>
-    <script>
+
+        function onHitting() {
+            for (let bullet of bullets) {
+                if (hitZombie(bullet)) {
+                    bullet.src = 'images/BulletHit.gif'
+                    return
+                }
+            }
+        }
+
+        function shoot(peashooter) {
+            for (let zombie of zombies) {
+                if (zombie.route === peashooter.route && peashooter.offsetLeft - 60 < zombie.offsetLeft) {
+                    bullets.push(createBullet(peashooter, bullets.length, bullet => {
+                        bullets = bullets.filter(item => item !== bullet)
+                        container.removeChild(bullet)
+                    }))
+                }
+            }
+        }
+
         function drag() {
             createPeashooter((peashooter) => {
-                bullets.push(createBullet(peashooter, bullets.length, bullet => {
-                    bullets = bullets.filter(item => item !== bullet)
-                    container.removeChild(bullet)
-                }))
+                peashooter.timer = setInterval(() => {
+                    shoot(peashooter)
+                }, 2000)
+                shoot(peashooter)
             });
         }
     </script>
