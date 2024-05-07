@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>pvz</title>
+        <style>
+            #container {
+                width: 950px;
+                overflow: hidden;
+            }
+
+            #bg {
+                margin-left: -100px;
+            }
+
+            #card {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        </style>
+    </head>
+
+    <body ondragstart="return false">
+        <div id="container">
+            <img id="bg" src="images/Background.jpg">
+            <img id="card" onclick="drag()" src="images/Peashooter.png">
+        </div>
+    </body>
+
+    <script src="sprites.js"></script>
+    <script>
+        let zombies = [], idx = 0, duration = 1000, counter = 0
+        window.onload = function () {
+            setInterval(function () {
+                addSprites()
+                spritesStep()
+                onHitting()
+            }, 100 / 8)
+        }
+
+        function addSprites() {
+            if (idx > 20) {
+                return
+            }
+            counter++
+            if (parseInt(counter / duration) >= idx) {
+                zombies.push(createZombie(idx))
+                if (idx === 3) {
+                    duration = 100
+                    counter = duration * idx
+                }
+                if (idx === 10) {
+                    duration = 1000
+                    counter = duration * idx
+                }
+                if (idx === 11) {
+                    duration = 100
+                    counter = duration * idx
+                }
+                idx++
+            }
+        }
+
+        function spritesStep() {
+            for (let zombie of zombies) {
+                zombie.step()
+            }
+        }
+
+        function onHitting() {
+
+        }
+    </script>
+    <script>
+        function drag() {
+            createPeashooter();
+        }
+    </script>
+</html>
