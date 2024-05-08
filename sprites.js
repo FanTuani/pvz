@@ -31,6 +31,9 @@ function createPeashooter(onclick) {
     let peashooter = document.createElement('img')
     peashooter.src = 'images/Peashooter.gif'
     peashooter.style.position = 'absolute'
+    peashooter.blood = 400
+    peashooter.attack = []
+    shooters.push(peashooter)
 
 
     // cancel right click menu

@@ -87,7 +87,7 @@
                         setTimeout(() => {
                             zombies = zombies.filter(item => item !== zombie)
                             container.removeChild(zombie)
-                        }, 1000)
+                        }, 2000)
                     } else {
                         zombie.style.opacity = 0.7
                         setTimeout(() => {
@@ -107,6 +107,26 @@
                     return
                 }
             }
+            for (let zombie of zombies) {
+                let peashooter = eatPlantBy(zombie)
+                if (peashooter === null) continue
+                // console.log("!")
+                if (zombie.src.endsWith('Zombie.gif')) { // being eaten
+                    zombie.src = 'images/ZombieAttack.gif'
+                    peashooter.attack.push(zombie.id)
+                } else if (peashooter.blood === 0) {
+                    clearInterval(peashooter.timer)
+                    shooters.splice(peashooter.index, 1)
+                    container.removeChild(peashooter)
+                    for (let id of peashooter.attack) {
+                        let zzz = document.getElementById(id)
+                        if (zzz === null) continue
+                        zzz.src = 'images/Zombie.gif'
+                    }
+                } else {
+                    peashooter.blood--
+                }
+            }
         }
 
         function shoot(peashooter) {
@@ -116,6 +136,7 @@
                         bullets = bullets.filter(item => item !== bullet)
                         container.removeChild(bullet)
                     }))
+                    break
                 }
             }
         }
@@ -127,6 +148,21 @@
                 }, 2000)
                 shoot(peashooter)
             });
+        }
+
+
+        function eatPlantBy(zombie) {
+            for (let i in shooters) {
+                let peashooter = shooters[i]
+                if (peashooter.route === zombie.route &&
+                    peashooter.offsetLeft - 40 > zombie.offsetLeft &&
+                    peashooter.offsetLeft - 100 < zombie.offsetLeft) {
+                    peashooter.index = i
+
+                    return peashooter
+                }
+            }
+            return null
         }
     </script>
 </html>
