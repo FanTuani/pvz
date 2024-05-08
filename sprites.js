@@ -19,7 +19,7 @@ function createZombie(id) {
         }
         zombie.count = 0
         if (zombie.src.endsWith('Zombie.gif') && zombie.offsetLeft > -200) {
-            zombie.style.left = zombie.offsetLeft - 2 + 'px'
+            zombie.style.left = zombie.offsetLeft - 1.5 + 'px'
         }
     }
 

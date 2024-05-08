@@ -75,7 +75,8 @@
 
         function hitZombie(bullet) {
             for (let zombie of zombies) {
-                if (bullet.route === zombie.route && bullet.offsetLeft - 60 > zombie.offsetLeft) {
+                if (bullet.route === zombie.route &&
+                    bullet.offsetLeft - 70 > zombie.offsetLeft) {
                     zombie.blood--;
                     if (zombie.blood === 0) {
                         let head = createHead(zombie)
@@ -101,16 +102,18 @@
         }
 
         function onHitting() {
-            for (let bullet of bullets) {
+            for (let bullet of bullets) { // bullet hitting zombie
                 if (hitZombie(bullet)) {
                     bullet.src = 'images/BulletHit.gif'
+                    setTimeout(() => {
+                        container.removeChild(bullet)
+                    }, 100)
                     return
                 }
             }
-            for (let zombie of zombies) {
+            for (let zombie of zombies) { // zombie hitting plant
                 let peashooter = eatPlantBy(zombie)
                 if (peashooter === null) continue
-                // console.log("!")
                 if (zombie.src.endsWith('Zombie.gif')) { // being eaten
                     zombie.src = 'images/ZombieAttack.gif'
                     peashooter.attack.push(zombie.id)
@@ -131,10 +134,15 @@
 
         function shoot(peashooter) {
             for (let zombie of zombies) {
-                if (zombie.route === peashooter.route && peashooter.offsetLeft - 60 < zombie.offsetLeft) {
+                if (zombie.route === peashooter.route &&
+                    peashooter.offsetLeft - 60 < zombie.offsetLeft) {
                     bullets.push(createBullet(peashooter, bullets.length, bullet => {
                         bullets = bullets.filter(item => item !== bullet)
-                        container.removeChild(bullet)
+                        setTimeout(() => {
+                            if (bullet.offsetLeft > 900) {
+                                container.removeChild(bullet)
+                            }
+                        }, 1000)
                     }))
                     break
                 }
