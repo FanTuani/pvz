@@ -4,6 +4,7 @@ function createZombie(id) {
     let zombie = document.createElement('img')
     zombie.src = 'images/Zombie.gif'
     zombie.blood = 9
+    zombie.speed = 2
 
     zombie.status = parseInt(Math.random() * 6)
     zombie.id = id
@@ -32,7 +33,7 @@ function createZombie(id) {
         }
         zombie.count = 0
         if (zombie.src.endsWith('Zombie.gif') && zombie.offsetLeft > -200) {
-            zombie.style.left = zombie.offsetLeft - 1.5 + 'px'
+            zombie.style.left = zombie.offsetLeft - zombie.speed + 'px'
         }
     }
 
@@ -40,16 +41,33 @@ function createZombie(id) {
     return zombie
 }
 
-function createPeashooter(onclick) {
+function createPeashooter(type, onclick) {
     let peashooter = document.createElement('img')
-    peashooter.src = 'images/Peashooter.gif'
+    switch (type) {
+        case 1: {
+            peashooter.src = 'images/Peashooter.gif'
+            peashooter.blood = 400
+            break
+        }
+        case 2: {
+            peashooter.src = 'images/SnowPea.gif'
+            peashooter.blood = 400
+            break
+        }
+        case 3: {
+            peashooter.src = 'images/Repeater.gif'
+            peashooter.blood = 400
+            break
+        }
+    }
+
     peashooter.style.position = 'absolute'
-    peashooter.blood = 400
+    peashooter.type = type
     peashooter.attack = []
     shooters.push(peashooter)
 
-    let card = document.getElementById('card')
-    card.style.opacity = 0.7
+    // let card = document.getElementsByClassName('card')
+    // card.style.opacity = 0.7
 
     // cancel right click menu
     document.oncontextmenu = function (event) {
@@ -65,7 +83,7 @@ function createPeashooter(onclick) {
         document.onmousedown = null
         document.onmousemove = null
 
-        card.style.opacity = 1
+        // card.style.opacity = 1
 
         if (event.button === 0) {
             let top = peashooter.offsetTop - 45
@@ -87,7 +105,22 @@ function createPeashooter(onclick) {
 
 function createBullet(peashooter, code, disappear) {
     let bullet = document.createElement('img')
-    bullet.src = 'images/Bullet.gif'
+    switch (peashooter.type) {
+        case 1 : {
+            bullet.src = 'images/Bullet.gif'
+            break
+        }
+        case 2: {
+            bullet.src = 'images/SnowBullet.gif'
+            break
+        }
+        case 3 : {
+            bullet.src = 'images/Bullet.gif'
+            break
+        }
+    }
+    bullet.type = peashooter.type
+
     bullet.style.position = 'absolute'
     bullet.route = peashooter.route
     bullet.code = new Date().getTime() + 'bullet' + code

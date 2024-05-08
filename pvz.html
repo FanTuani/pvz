@@ -13,7 +13,7 @@
                 margin-left: -100px;
             }
 
-            #card {
+            .card {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -24,7 +24,9 @@
     <body ondragstart="return false">
         <div id="container">
             <img id="bg" src="images/Background.jpg">
-            <img id="card" onclick="drag()" src="images/Peashooter.png">
+            <img class="card" onclick="drag(1)" src="images/Peashooter.png">
+            <img class="card" style="top: 60px" onclick="drag(2)" src="images/SnowPea.png">
+            <img class="card" style="top: 120px" onclick="drag(3)" src="images/Repeater.png">
         </div>
     </body>
 
@@ -78,6 +80,9 @@
                 if (bullet.route === zombie.route &&
                     bullet.offsetLeft - 70 > zombie.offsetLeft) {
                     zombie.blood--;
+                    if (bullet.type === 2) {
+                        zombie.speed = 1
+                    }
                     // dif head
                     if (zombie.blood === 0) {
                         let head = createHead(zombie)
@@ -122,6 +127,8 @@
                     peashooter.attack.push(zombie.id)
                 } else if (peashooter.blood === 0) {
                     clearInterval(peashooter.timer)
+                    if (peashooter.timer2)
+                        clearInterval(peashooter.timer2)
                     shooters.splice(peashooter.index, 1)
                     container.removeChild(peashooter)
                     for (let id of peashooter.attack) {
@@ -154,14 +161,21 @@
             }
         }
 
-        function drag() {
-
-            createPeashooter((peashooter) => {
+        function drag(type) {
+            let shooter = createPeashooter(type, (peashooter) => {
                 peashooter.timer = setInterval(() => {
                     shoot(peashooter)
                 }, 2000)
                 shoot(peashooter)
             });
+            if (type === 3) {
+                setTimeout(() => {
+                    shooter.timer2 = setInterval(() => {
+                        shoot(shooter)
+                    }, 2000)
+                    shoot(shooter)
+                }, 100)
+            }
         }
 
 
