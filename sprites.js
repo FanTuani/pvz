@@ -3,8 +3,21 @@ let container = document.getElementById('container')
 function createZombie(id) {
     let zombie = document.createElement('img')
     zombie.src = 'images/Zombie.gif'
-    zombie.id = id
     zombie.blood = 9
+
+    zombie.status = parseInt(Math.random() * 6)
+    zombie.id = id
+    if (zombie.status < 3) {
+        zombie.src = 'images/Zombie.gif'
+        zombie.blood = 9
+    } else if (zombie.status === 5) {
+        zombie.src = 'images/BucketheadZombie.gif'
+        zombie.blood = 49
+    } else {
+        zombie.src = 'images/ConeheadZombie.gif'
+        zombie.blood = 29
+    }
+
     zombie.style.position = 'absolute'
 
     zombie.route = parseInt(Math.random() * 5)
@@ -35,6 +48,8 @@ function createPeashooter(onclick) {
     peashooter.attack = []
     shooters.push(peashooter)
 
+    let card = document.getElementById('card')
+    card.style.opacity = 0.7
 
     // cancel right click menu
     document.oncontextmenu = function (event) {
@@ -49,6 +64,8 @@ function createPeashooter(onclick) {
     document.onmousedown = function (event) {
         document.onmousedown = null
         document.onmousemove = null
+
+        card.style.opacity = 1
 
         if (event.button === 0) {
             let top = peashooter.offsetTop - 45

@@ -78,9 +78,11 @@
                 if (bullet.route === zombie.route &&
                     bullet.offsetLeft - 70 > zombie.offsetLeft) {
                     zombie.blood--;
+                    // dif head
                     if (zombie.blood === 0) {
                         let head = createHead(zombie)
-                        zombie.src = 'images/ZombieLostHead.gif'
+                        zombie.src = zombie.src.endsWith('ZombieAttack.gif') ?
+                            'images/ZombieLostHeadAttack.gif' : 'images/ZombieLostHead.gif'
                         setTimeout(() => {
                             zombie.src = 'images/ZombieDie.gif'
                             container.removeChild(head)
@@ -114,6 +116,7 @@
             for (let zombie of zombies) { // zombie hitting plant
                 let peashooter = eatPlantBy(zombie)
                 if (peashooter === null) continue
+                // dif head
                 if (zombie.src.endsWith('Zombie.gif')) { // being eaten
                     zombie.src = 'images/ZombieAttack.gif'
                     peashooter.attack.push(zombie.id)
@@ -124,7 +127,9 @@
                     for (let id of peashooter.attack) {
                         let zzz = document.getElementById(id)
                         if (zzz === null) continue
+                        if (zzz.blood <= 0) continue
                         zzz.src = 'images/Zombie.gif'
+                        // dif head
                     }
                 } else {
                     peashooter.blood--
@@ -150,6 +155,7 @@
         }
 
         function drag() {
+
             createPeashooter((peashooter) => {
                 peashooter.timer = setInterval(() => {
                     shoot(peashooter)
