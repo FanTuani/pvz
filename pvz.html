@@ -80,7 +80,8 @@
                     zombie.blood--;
                     if (zombie.blood === 0) {
                         let head = createHead(zombie)
-                        zombie.src = 'images/ZombieLostHead.gif'
+                        zombie.src = zombie.src.endsWith('ZombieAttack.gif') ?
+                            'images/ZombieLostHeadAttack.gif' : 'images/ZombieLostHead.gif'
                         setTimeout(() => {
                             zombie.src = 'images/ZombieDie.gif'
                             container.removeChild(head)
@@ -124,6 +125,7 @@
                     for (let id of peashooter.attack) {
                         let zzz = document.getElementById(id)
                         if (zzz === null) continue
+                        if (zzz.blood <= 0) continue
                         zzz.src = 'images/Zombie.gif'
                     }
                 } else {
