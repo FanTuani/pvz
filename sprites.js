@@ -62,6 +62,11 @@ function createPeashooter(type, onclick) {
             peashooter.blood = 400
             break
         }
+        case 4: {
+            peashooter.src = 'images/TallNut.gif'
+            peashooter.blood = 2000
+            break
+        }
     }
 
     peashooter.style.position = 'absolute'
@@ -78,8 +83,13 @@ function createPeashooter(type, onclick) {
     }
     // mouse follow
     document.onmousemove = function (event) {
-        peashooter.style.top = event.y - 35 + 'px'
-        peashooter.style.left = event.x - 30 + 'px'
+        if (type === 4) {
+            peashooter.style.top = event.y - 80 + 'px'
+            peashooter.style.left = event.x - 30 + 'px'
+        } else {
+            peashooter.style.top = event.y - 35 + 'px'
+            peashooter.style.left = event.x - 30 + 'px'
+        }
     }
     // plant
     document.onmousedown = function (event) {
@@ -95,7 +105,11 @@ function createPeashooter(type, onclick) {
                 container.removeChild(peashooter)
                 return
             }
-            peashooter.style.top = (peashooter.route + 1) * 100 + 'px' // emm
+            if (type === 4) {
+                peashooter.style.top = (peashooter.route + 1) * 100 - 30 + 'px' // emm
+            } else {
+                peashooter.style.top = (peashooter.route + 1) * 100 + 'px' // emm
+            }
             onclick(peashooter)
         } else if (event.button === 2) {
             container.removeChild(peashooter)
