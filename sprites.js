@@ -1,6 +1,6 @@
 let container = document.getElementById('container')
 
-function createZombie(id) {
+function createZombie(id, gameover) {
     let zombie = document.createElement('img')
     zombie.src = 'images/Zombie.gif'
     zombie.blood = 9
@@ -34,6 +34,9 @@ function createZombie(id) {
         zombie.count = 0
         if (zombie.src.endsWith('Zombie.gif') && zombie.offsetLeft > -200) {
             zombie.style.left = zombie.offsetLeft - zombie.speed + 'px'
+        }
+        if (zombie.offsetLeft < -150) {
+            gameover()
         }
     }
 
