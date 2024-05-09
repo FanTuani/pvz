@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Plants VS Zombies</title>
+    </head>
+    <style>
+        #container {
+            width: 950px;
+            overflow: hidden;
+        }
+
+        #background {
+            margin-left: -100px;
+        }
+
+        .card {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <script>
+        plants = []
+    </script>
+    <script src="ui.js"></script>
+    <body ondragstart="return false">
+        <div id="container">
+            <img id="background" src="images/Background.jpg">
+            <img class="card" onclick="drag(0)" src="images/Peashooter.png">
+            <img class="card" style="top: 60px" onclick="drag(1)" src="images/SnowPea.png">
+            <img class="card" style="top: 120px" onclick="drag(2)" src="images/Repeater.png">
+            <img class="card" style="top: 180px" onclick="drag(3)" src="images/TallNut.png">
+        </div>
+    </body>
+</html>
