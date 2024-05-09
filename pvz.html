@@ -27,6 +27,7 @@
             <img class="card" onclick="drag(1)" src="images/Peashooter.png">
             <img class="card" style="top: 60px" onclick="drag(2)" src="images/SnowPea.png">
             <img class="card" style="top: 120px" onclick="drag(3)" src="images/Repeater.png">
+            <img class="card" style="top: 180px" onclick="drag(4)" src="images/TallNut.png">
         </div>
     </body>
 
@@ -140,6 +141,13 @@
                     }
                 } else {
                     peashooter.blood--
+                    if (peashooter.type === 4) {
+                        if (peashooter.blood < 600) {
+                            peashooter.src = 'images/TallNutCracked2.gif'
+                        } else if (peashooter.blood < 1200) {
+                            peashooter.src = 'images/TallNutCracked1.gif'
+                        }
+                    }
                 }
             }
         }
@@ -162,6 +170,15 @@
         }
 
         function drag(type) {
+            if (type === 4) {
+                let shooter = createPeashooter(type, (peashooter) => {
+                    peashooter.timer = setInterval(() => {
+                        // shoot(peashooter)
+                    }, 2000)
+                    // shoot(peashooter)
+                });
+                return
+            }
             let shooter = createPeashooter(type, (peashooter) => {
                 peashooter.timer = setInterval(() => {
                     shoot(peashooter)
