@@ -24,10 +24,23 @@
     }
 }
 
+@keyframes damageEffect {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .damageTextRed {
     animation: fadeOutUpRed 1s forwards;
 }
 
 .damageTextGreen {
     animation: fadeOutUpGreen 1s forwards;
+}
+
+.damageEff {
+    animation: damageEffect 0.1s;
 }

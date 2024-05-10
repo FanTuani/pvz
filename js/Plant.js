@@ -2,7 +2,7 @@ class Plant {
     constructor(plant) {
         this.element = plant;
         this.shootable = plant.cardIdx < 3;
-        this.boomable = plant.cardIdx === 5
+        this.boomable = plant.cardIdx === 5 || plant.cardIdx === 6
         this.sunable = plant.cardIdx === 4
         this.row = plant.row;
         this.column = plant.column;
@@ -53,6 +53,24 @@ class Plant {
             }, 1500)
             for (let zombie of zombies) {
                 if (zombie.row === this.row) {
+                    zombie.damage(zombie.blood)
+                }
+            }
+        } else if (this.element.src.includes('CherryBomb')) {
+            let boomText = document.createElement('p')
+            boomText.textContent = 'BOOM'
+            boomText.style.position = 'absolute'
+            boomText.style.top = this.element.offsetTop - 70 + 'px'
+            boomText.style.left = this.element.offsetLeft - 65 + 'px'
+            boomText.style.fontSize = '70px'
+            boomText.classList.add('damageTextRed')
+            container.appendChild(boomText)
+            setTimeout(() => {
+                container.removeChild(boomText)
+            }, 1000)
+            for (let zombie of zombies) {
+                if (Math.abs(zombie.row - this.row) < 2 &&
+                    Math.abs(zombie.element.offsetLeft + 50 - this.element.offsetLeft) < 150) {
                     zombie.damage(zombie.blood)
                 }
             }

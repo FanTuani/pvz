@@ -54,6 +54,9 @@ function drag(cardIdx) {
         if (plant.src.includes('Tall')) {
             transPlant.style.top = transPlant.offsetTop - 30 + 'px'
         }
+        if (plant.src.includes('Cherry')) {
+            transPlant.style.left = transPlant.offsetLeft - 20 + 'px'
+        }
     }
 
     document.onmousedown = function () {

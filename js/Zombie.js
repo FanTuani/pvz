@@ -23,7 +23,7 @@ class Zombie {
         this.element.style.top = 30 + this.row * 100 + 'px';
         this.element.style.left = '800px';
 
-        this.speed = 2;
+        this.speed = 5;
 
         this.moveInterval = setInterval(() => {
             this.step();
@@ -66,6 +66,11 @@ class Zombie {
 
     damage(damage) {
         this.blood -= damage;
+        this.element.classList.add('damageEff')
+        setTimeout(() => {
+            this.element.classList.remove('damageEff')
+        }, 100)
+
         if (this.blood <= 0) {
             this.die();
         }
@@ -90,6 +95,7 @@ class Zombie {
         setTimeout(() => {
             container.removeChild(this.element);
         }, 2000);
+        killedZombies++
     }
 }
 
@@ -107,10 +113,10 @@ class Head {
     }
 }
 
-function startSpawnZombies(num) {
+function startSpawnZombies(num, inv) {
     let cnt = 0;
     let intervalId = setInterval(() => {
         zombies.push(new Zombie());
         if (++cnt >= num) clearInterval(intervalId);
-    }, 1000);
+    }, inv);
 }

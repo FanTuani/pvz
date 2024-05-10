@@ -30,6 +30,7 @@
             <img class="card" style="top: 180px" onclick="drag(3)" src="images/TallNut.png">
             <img class="card" style="top: 240px" onclick="drag(4)" src="images/SunFlower.png">
             <img class="card" style="top: 300px" onclick="drag(5)" src="images/Jalapeno.png">
+            <img class="card" style="top: 360px" onclick="drag(6)" src="images/CherryBomb.png">
         </div>
     </body>
     <script src="js/ui.js"></script>
@@ -39,11 +40,29 @@
     <script>
         let container = document.getElementById('container')
         let cardSrc = ['images/Peashooter', 'images/SnowPea', 'images/Repeater', 'images/TallNut',
-            'images/SunFlower', 'images/Jalapeno']
+            'images/SunFlower', 'images/Jalapeno', 'images/CherryBomb']
         let plants = [], zombies = [], bullets = []
+        let killedZombies = 0
 
         window.onload = function () {
-            startSpawnZombies(30)
+            // let zombieNum = window.prompt("the number of zombies you want to challenge", 10);
+            let zombieNum = 20
+            startSpawnZombies(zombieNum, 500)
+
+            let checkWinInv = setInterval(() => {
+                for (let zombie of zombies) {
+                    if (zombie.element.offsetLeft < 50) {
+                        alert('lose')
+                        location.reload()
+                        clearInterval(checkWinInv)
+                    }
+                }
+                if (killedZombies >= zombieNum) {
+                    alert('win')
+                    location.reload()
+                    clearInterval(checkWinInv)
+                }
+            }, 500)
         }
     </script>
 </html>
