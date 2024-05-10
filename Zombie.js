@@ -17,7 +17,22 @@ class Zombie {
     }
 
     step() {
-        this.element.style.left = this.element.offsetLeft - this.speed + 'px';
+        let shouldEat = false, eatPlant = null
+        for (let plant of plants) {
+            if (plant.row !== this.row) continue
+            if (plant.element.offsetLeft < this.element.offsetLeft + 30 ||
+                plant.element.offsetLeft > this.element.offsetLeft + 120) continue;
+            eatPlant = plant
+        }
+        if (eatPlant) {
+            eatPlant.damage(1)
+            if (this.element.src.includes('Zombie.gif'))
+                this.element.src = 'images/ZombieAttack.gif?' + Math.random()
+        } else {
+            if (this.element.src.includes('ZombieAttack.gif'))
+                this.element.src = 'images/Zombie.gif?' + Math.random()
+            this.element.style.left = this.element.offsetLeft - this.speed + 'px';
+        }
     }
 
     damage(damage) {
@@ -30,9 +45,9 @@ class Zombie {
         damageText.style.position = 'absolute'
         damageText.textContent = this.blood.toString()
         damageText.style.top = this.element.offsetTop + 'px';
-        damageText.style.left = this.element.offsetLeft + 75 + 'px';
+        damageText.style.left = this.element.offsetLeft + 80 + 'px';
         damageText.style.opacity = 1; // 设置为可见
-        damageText.classList.add('damageText')
+        damageText.classList.add('damageTextRed')
         container.appendChild(damageText)
         setTimeout(() => {
             damageText.style.opacity = 0; // 一段时间后再将其设置为不可见
