@@ -75,11 +75,10 @@ class Zombie {
         damageText.textContent = this.blood.toString()
         damageText.style.top = this.element.offsetTop + 'px';
         damageText.style.left = this.element.offsetLeft + 80 + 'px';
-        damageText.style.opacity = 1; // 设置为可见
         damageText.classList.add('damageTextRed')
         container.appendChild(damageText)
         setTimeout(() => {
-            damageText.style.opacity = 0; // 一段时间后再将其设置为不可见
+            container.removeChild(damageText)
         }, 1000);
     }
 

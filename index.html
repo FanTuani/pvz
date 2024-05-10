@@ -28,6 +28,8 @@
             <img class="card" style="top: 60px" onclick="drag(1)" src="images/SnowPea.png">
             <img class="card" style="top: 120px" onclick="drag(2)" src="images/Repeater.png">
             <img class="card" style="top: 180px" onclick="drag(3)" src="images/TallNut.png">
+            <img class="card" style="top: 240px" onclick="drag(4)" src="images/CherryBomb.png">
+            <img class="card" style="top: 300px" onclick="drag(5)" src="images/Jalapeno.png">
         </div>
     </body>
     <script src="js/ui.js"></script>
@@ -36,7 +38,8 @@
     <script src="js/Bullet.js"></script>
     <script>
         let container = document.getElementById('container')
-        let cardSrc = ['images/Peashooter', 'images/SnowPea', 'images/Repeater', 'images/TallNut']
+        let cardSrc = ['images/Peashooter', 'images/SnowPea', 'images/Repeater', 'images/TallNut',
+            'images/CherryBomb', 'images/Jalapeno']
         let plants = [], zombies = [], bullets = []
 
         window.onload = function () {

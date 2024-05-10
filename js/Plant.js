@@ -2,6 +2,7 @@ class Plant {
     constructor(plant) {
         this.element = plant;
         this.shootable = plant.cardIdx < 3;
+        this.boomable = plant.cardIdx === 4 || plant.cardIdx === 5
         this.row = plant.row;
         this.column = plant.column;
         this.blood = (plant.cardIdx === 3) ? 200 : 30;
@@ -10,6 +11,31 @@ class Plant {
                 this.shoot();
             }, 1000);
         }
+        if (this.boomable) {
+            setTimeout(() => {
+                this.boom()
+            }, 500)
+        }
+    }
+
+    boom() {
+        if (this.element.src.includes('Jalapeno')) {
+            let flame = document.createElement('img')
+            flame.style.position = 'absolute'
+            flame.src = 'images/JalapenoAttack.gif?' + Math.random()
+            flame.style.top = this.element.offsetTop - 50 + 'px'
+            flame.style.left = 150 + 'px'
+            container.appendChild(flame)
+            setTimeout(() => {
+                container.removeChild(flame)
+            }, 1500)
+            for (let zombie of zombies) {
+                if (zombie.row === this.row) {
+                    zombie.damage(zombie.blood)
+                }
+            }
+        }
+        this.die()
     }
 
     shoot() {
@@ -41,11 +67,10 @@ class Plant {
         damageText.textContent = this.blood.toString()
         damageText.style.top = this.element.offsetTop - 30 + 'px';
         damageText.style.left = this.element.offsetLeft + 25 + 'px';
-        damageText.style.opacity = 1; // 设置为可见
         damageText.classList.add('damageTextGreen')
         container.appendChild(damageText)
         setTimeout(() => {
-            damageText.style.opacity = 0; // 一段时间后再将其设置为不可见
+            container.removeChild(damageText)
         }, 1000);
         if (this.element.src.includes('Tall')) {
             if (this.blood > 60 && this.blood < 120 && !this.element.src.includes('Cracked1')) {
