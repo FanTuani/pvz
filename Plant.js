@@ -23,6 +23,11 @@ class Plant {
         if (!needShoot) return;
 
         new Bullet(this)
+        if (this.element.src.includes('Repeater.gif')) {
+            setTimeout(() => {
+                new Bullet(this)
+            }, 120)
+        }
     }
 
     damage(damage) {

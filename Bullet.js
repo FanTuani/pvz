@@ -1,7 +1,11 @@
 class Bullet {
     constructor(shooter) {
+        this.shooter = shooter
         this.element = document.createElement('img');
         this.element.src = 'images/Bullet.gif';
+        if (this.shooter.element.src.includes('SnowPea.gif')) {
+            this.element.src = 'images/SnowBullet.gif';
+        }
         this.element.style.position = 'absolute';
         this.element.style.top = shooter.element.offsetTop + 'px';
         this.element.style.left = shooter.element.offsetLeft + 35 + 'px';
@@ -28,6 +32,9 @@ class Bullet {
 
             this.destroy();
             zombie.damage(1);
+            if (this.shooter.element.src.includes('SnowPea.gif')) {
+                zombie.speed = 1
+            }
             break;
         }
     }
