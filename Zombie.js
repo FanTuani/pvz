@@ -25,6 +25,18 @@ class Zombie {
         if (this.blood <= 0) {
             this.die();
         }
+
+        let damageText = document.createElement('p');
+        damageText.style.position = 'absolute'
+        damageText.textContent = this.blood.toString()
+        damageText.style.top = this.element.offsetTop + 'px';
+        damageText.style.left = this.element.offsetLeft + 75 + 'px';
+        damageText.style.opacity = 1; // 设置为可见
+        damageText.classList.add('damageText')
+        container.appendChild(damageText)
+        setTimeout(() => {
+            damageText.style.opacity = 0; // 一段时间后再将其设置为不可见
+        }, 1000);
     }
 
     die() {

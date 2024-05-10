@@ -1,0 +1,16 @@
+@keyframes fadeOutUp {
+    from {
+        color: orangered;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        color: black;
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+.damageText {
+    animation: fadeOutUp 1s forwards;
+}
