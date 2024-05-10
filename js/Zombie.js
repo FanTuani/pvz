@@ -23,7 +23,7 @@ class Zombie {
         this.element.style.top = 30 + this.row * 100 + 'px';
         this.element.style.left = '800px';
 
-        this.speed = 5;
+        this.speed = 2;
 
         this.moveInterval = setInterval(() => {
             this.step();
