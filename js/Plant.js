@@ -2,7 +2,8 @@ class Plant {
     constructor(plant) {
         this.element = plant;
         this.shootable = plant.cardIdx < 3;
-        this.boomable = plant.cardIdx === 4 || plant.cardIdx === 5
+        this.boomable = plant.cardIdx === 5
+        this.sunable = plant.cardIdx === 4
         this.row = plant.row;
         this.column = plant.column;
         this.blood = (plant.cardIdx === 3) ? 200 : 30;
@@ -16,6 +17,27 @@ class Plant {
                 this.boom()
             }, 500)
         }
+        if (this.sunable) {
+            this.sunInv = setInterval(() => {
+                this.spawnSun()
+            }, 2000)
+        }
+    }
+
+    spawnSun() {
+        let sun = document.createElement('img')
+        sun.src = 'images/Sun.gif'
+        sun.style.position = 'absolute'
+        sun.style.top = this.element.offsetTop + 'px'
+        sun.style.left = this.element.offsetLeft + 'px'
+        container.appendChild(sun)
+        let sunMoveInv = setInterval(() => {
+            sun.style.top = sun.offsetTop - 2 + 'px'
+            if (sun.offsetTop <= 0) {
+                clearInterval(sunMoveInv)
+                container.removeChild(sun)
+            }
+        }, 5)
     }
 
     boom() {
@@ -85,6 +107,7 @@ class Plant {
     die() {
         plants = plants.filter(item => item !== this)
         if (this.shootInv) clearInterval(this.shootInv)
+        if (this.sunInv) clearInterval(this.sunInv)
         container.removeChild(this.element)
     }
 }

@@ -51,6 +51,9 @@ function drag(cardIdx) {
 
         transPlant.style.top = 90 + transPlant.row * 100 + 'px'
         transPlant.style.left = 170 + transPlant.column * 80 + 'px'
+        if (plant.src.includes('Tall')) {
+            transPlant.style.top = transPlant.offsetTop - 30 + 'px'
+        }
     }
 
     document.onmousedown = function () {
