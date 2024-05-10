@@ -1,221 +1,221 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>pvz</title>
-        <style>
-            #container {
-                width: 950px;
-                overflow: hidden;
-            }
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--    <head>-->
+<!--        <meta charset="UTF-8">-->
+<!--        <title>pvz</title>-->
+<!--        <style>-->
+<!--            #container {-->
+<!--                width: 950px;-->
+<!--                overflow: hidden;-->
+<!--            }-->
 
-            #bg {
-                margin-left: -100px;
-            }
+<!--            #bg {-->
+<!--                margin-left: -100px;-->
+<!--            }-->
 
-            .card {
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-        </style>
-    </head>
+<!--            .card {-->
+<!--                position: absolute;-->
+<!--                top: 0;-->
+<!--                left: 0;-->
+<!--            }-->
+<!--        </style>-->
+<!--    </head>-->
 
-    <body ondragstart="return false">
-        <div id="container">
-            <img id="bg" src="../images/Background.jpg">
-            <img class="card" onclick="drag(1)" src="../images/Peashooter.png">
-            <img class="card" style="top: 60px" onclick="drag(2)" src="../images/SnowPea.png">
-            <img class="card" style="top: 120px" onclick="drag(3)" src="../images/Repeater.png">
-            <img class="card" style="top: 180px" onclick="drag(4)" src="../images/TallNut.png">
-        </div>
-    </body>
+<!--    <body ondragstart="return false">-->
+<!--        <div id="container">-->
+<!--            <img id="bg" src="../images/Background.jpg">-->
+<!--            <img class="card" onclick="drag(1)" src="../images/Peashooter.png">-->
+<!--            <img class="card" style="top: 60px" onclick="drag(2)" src="../images/SnowPea.png">-->
+<!--            <img class="card" style="top: 120px" onclick="drag(3)" src="../images/Repeater.png">-->
+<!--            <img class="card" style="top: 180px" onclick="drag(4)" src="../images/TallNut.png">-->
+<!--        </div>-->
+<!--    </body>-->
 
-    <script src="sprites.js"></script>
-    <script>
-        let zombies = [], bullets = [], shooters = []
-        let idx = 0, duration = 1000, counter = 0, zbDieNum = 0
+<!--    <script src="sprites.js"></script>-->
+<!--    <script>-->
+<!--        let zombies = [], bullets = [], shooters = []-->
+<!--        let idx = 0, duration = 1000, counter = 0, zbDieNum = 0-->
 
-        window.onload = () => { // = function() {
-            setInterval(() => {
-                addSprites()
-                spritesStep()
-                onHitting()
-            }, 100 / 8)
-        }
+<!--        window.onload = () => { // = function() {-->
+<!--            setInterval(() => {-->
+<!--                addSprites()-->
+<!--                spritesStep()-->
+<!--                onHitting()-->
+<!--            }, 100 / 8)-->
+<!--        }-->
 
-        function addSprites() {
-            if (idx > 20) {
-                return
-            }
-            counter++
-            if (parseInt(counter / duration) >= idx) {
-                zombies.push(createZombie(idx, () => {
-                    alert('gg')
-                    window.location.reload()
-                }))
-                if (idx === 3) {
-                    duration = 100
-                    counter = duration * idx
-                }
-                if (idx === 10) {
-                    duration = 1000
-                    counter = duration * idx
-                }
-                if (idx === 11) {
-                    duration = 100
-                    counter = duration * idx
-                }
-                idx++
-            }
-        }
+<!--        function addSprites() {-->
+<!--            if (idx > 20) {-->
+<!--                return-->
+<!--            }-->
+<!--            counter++-->
+<!--            if (parseInt(counter / duration) >= idx) {-->
+<!--                zombies.push(createZombie(idx, () => {-->
+<!--                    alert('gg')-->
+<!--                    window.location.reload()-->
+<!--                }))-->
+<!--                if (idx === 3) {-->
+<!--                    duration = 100-->
+<!--                    counter = duration * idx-->
+<!--                }-->
+<!--                if (idx === 10) {-->
+<!--                    duration = 1000-->
+<!--                    counter = duration * idx-->
+<!--                }-->
+<!--                if (idx === 11) {-->
+<!--                    duration = 100-->
+<!--                    counter = duration * idx-->
+<!--                }-->
+<!--                idx++-->
+<!--            }-->
+<!--        }-->
 
-        function spritesStep() {
-            for (let zombie of zombies) {
-                zombie.step()
-            }
-            for (let bullet of bullets) {
-                bullet.step()
-            }
-        }
+<!--        function spritesStep() {-->
+<!--            for (let zombie of zombies) {-->
+<!--                zombie.step()-->
+<!--            }-->
+<!--            for (let bullet of bullets) {-->
+<!--                bullet.step()-->
+<!--            }-->
+<!--        }-->
 
-        function hitZombie(bullet) {
-            for (let zombie of zombies) {
-                if (bullet.route === zombie.route &&
-                    bullet.offsetLeft - 70 > zombie.offsetLeft) {
-                    zombie.blood--;
-                    if (bullet.type === 2) {
-                        zombie.speed = 1
-                    }
-                    // dif head
-                    if (zombie.blood === 0) {
-                        let head = createHead(zombie)
-                        zombie.src = zombie.src.endsWith('ZombieAttack.gif') ?
-                            'images/ZombieLostHeadAttack.gif' : 'images/ZombieLostHead.gif'
-                        setTimeout(() => {
-                            zombie.src = 'images/ZombieDie.gif'
-                            container.removeChild(head)
-                        }, 1000)
-                        setTimeout(() => {
-                            zombies = zombies.filter(item => item !== zombie)
-                            container.removeChild(zombie)
-                            zbDieNum++
-                            if (zbDieNum > 20) {
-                                alert('win')
-                                window.location.reload()
-                            }
-                        }, 2000)
-                    } else {
-                        zombie.style.opacity = 0.7
-                        setTimeout(() => {
-                            zombie.style.opacity = 1
-                        }, 100)
-                    }
-                    return true
-                }
-            }
-            return false
-        }
+<!--        function hitZombie(bullet) {-->
+<!--            for (let zombie of zombies) {-->
+<!--                if (bullet.route === zombie.route &&-->
+<!--                    bullet.offsetLeft - 70 > zombie.offsetLeft) {-->
+<!--                    zombie.blood&#45;&#45;;-->
+<!--                    if (bullet.type === 2) {-->
+<!--                        zombie.speed = 1-->
+<!--                    }-->
+<!--                    // dif head-->
+<!--                    if (zombie.blood === 0) {-->
+<!--                        let head = createHead(zombie)-->
+<!--                        zombie.src = zombie.src.endsWith('ZombieAttack.gif') ?-->
+<!--                            'images/ZombieLostHeadAttack.gif' : 'images/ZombieLostHead.gif'-->
+<!--                        setTimeout(() => {-->
+<!--                            zombie.src = 'images/ZombieDie.gif'-->
+<!--                            container.removeChild(head)-->
+<!--                        }, 1000)-->
+<!--                        setTimeout(() => {-->
+<!--                            zombies = zombies.filter(item => item !== zombie)-->
+<!--                            container.removeChild(zombie)-->
+<!--                            zbDieNum++-->
+<!--                            if (zbDieNum > 20) {-->
+<!--                                alert('win')-->
+<!--                                window.location.reload()-->
+<!--                            }-->
+<!--                        }, 2000)-->
+<!--                    } else {-->
+<!--                        zombie.style.opacity = 0.7-->
+<!--                        setTimeout(() => {-->
+<!--                            zombie.style.opacity = 1-->
+<!--                        }, 100)-->
+<!--                    }-->
+<!--                    return true-->
+<!--                }-->
+<!--            }-->
+<!--            return false-->
+<!--        }-->
 
-        function onHitting() {
-            for (let bullet of bullets) { // bullet hitting zombie
-                if (hitZombie(bullet)) {
-                    bullet.src = 'images/BulletHit.gif'
-                    setTimeout(() => {
-                        container.removeChild(bullet)
-                    }, 100)
-                    return
-                }
-            }
-            for (let zombie of zombies) { // zombie hitting plant
-                let peashooter = eatPlantBy(zombie)
-                if (peashooter === null) continue
-                // dif head
-                if (zombie.src.endsWith('Zombie.gif')) { // being eaten
-                    zombie.src = 'images/ZombieAttack.gif'
-                    peashooter.attack.push(zombie.id)
-                } else if (peashooter.blood === 0) {
-                    clearInterval(peashooter.timer)
-                    if (peashooter.timer2)
-                        clearInterval(peashooter.timer2)
-                    shooters.splice(peashooter.index, 1)
-                    container.removeChild(peashooter)
-                    for (let id of peashooter.attack) {
-                        let zzz = document.getElementById(id)
-                        if (zzz === null) continue
-                        if (zzz.blood <= 0) continue
-                        zzz.src = 'images/Zombie.gif'
-                        // dif head
-                    }
-                } else {
-                    peashooter.blood--
-                    if (peashooter.type === 4) {
-                        if (peashooter.blood < 600) {
-                            peashooter.src = 'images/TallNutCracked2.gif'
-                        } else if (peashooter.blood < 1200) {
-                            peashooter.src = 'images/TallNutCracked1.gif'
-                        }
-                    }
-                }
-            }
-        }
+<!--        function onHitting() {-->
+<!--            for (let bullet of bullets) { // bullet hitting zombie-->
+<!--                if (hitZombie(bullet)) {-->
+<!--                    bullet.src = 'images/BulletHit.gif'-->
+<!--                    setTimeout(() => {-->
+<!--                        container.removeChild(bullet)-->
+<!--                    }, 100)-->
+<!--                    return-->
+<!--                }-->
+<!--            }-->
+<!--            for (let zombie of zombies) { // zombie hitting plant-->
+<!--                let peashooter = eatPlantBy(zombie)-->
+<!--                if (peashooter === null) continue-->
+<!--                // dif head-->
+<!--                if (zombie.src.endsWith('Zombie.gif')) { // being eaten-->
+<!--                    zombie.src = 'images/ZombieAttack.gif'-->
+<!--                    peashooter.attack.push(zombie.id)-->
+<!--                } else if (peashooter.blood === 0) {-->
+<!--                    clearInterval(peashooter.timer)-->
+<!--                    if (peashooter.timer2)-->
+<!--                        clearInterval(peashooter.timer2)-->
+<!--                    shooters.splice(peashooter.index, 1)-->
+<!--                    container.removeChild(peashooter)-->
+<!--                    for (let id of peashooter.attack) {-->
+<!--                        let zzz = document.getElementById(id)-->
+<!--                        if (zzz === null) continue-->
+<!--                        if (zzz.blood <= 0) continue-->
+<!--                        zzz.src = 'images/Zombie.gif'-->
+<!--                        // dif head-->
+<!--                    }-->
+<!--                } else {-->
+<!--                    peashooter.blood&#45;&#45;-->
+<!--                    if (peashooter.type === 4) {-->
+<!--                        if (peashooter.blood < 600) {-->
+<!--                            peashooter.src = 'images/TallNutCracked2.gif'-->
+<!--                        } else if (peashooter.blood < 1200) {-->
+<!--                            peashooter.src = 'images/TallNutCracked1.gif'-->
+<!--                        }-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
 
-        function shoot(peashooter) {
-            for (let zombie of zombies) {
-                if (zombie.route === peashooter.route &&
-                    peashooter.offsetLeft - 60 < zombie.offsetLeft) {
-                    bullets.push(createBullet(peashooter, bullets.length, bullet => {
-                        bullets = bullets.filter(item => item !== bullet)
-                        setTimeout(() => {
-                            if (bullet.offsetLeft > 900) {
-                                container.removeChild(bullet)
-                            }
-                        }, 1000)
-                    }))
-                    break
-                }
-            }
-        }
+<!--        function shoot(peashooter) {-->
+<!--            for (let zombie of zombies) {-->
+<!--                if (zombie.route === peashooter.route &&-->
+<!--                    peashooter.offsetLeft - 60 < zombie.offsetLeft) {-->
+<!--                    bullets.push(createBullet(peashooter, bullets.length, bullet => {-->
+<!--                        bullets = bullets.filter(item => item !== bullet)-->
+<!--                        setTimeout(() => {-->
+<!--                            if (bullet.offsetLeft > 900) {-->
+<!--                                container.removeChild(bullet)-->
+<!--                            }-->
+<!--                        }, 1000)-->
+<!--                    }))-->
+<!--                    break-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
 
-        function drag(type) {
-            if (type === 4) {
-                let shooter = createPeashooter(type, (peashooter) => {
-                    peashooter.timer = setInterval(() => {
-                        // shoot(peashooter)
-                    }, 2000)
-                    // shoot(peashooter)
-                });
-                return
-            }
-            let shooter = createPeashooter(type, (peashooter) => {
-                peashooter.timer = setInterval(() => {
-                    shoot(peashooter)
-                }, 2000)
-                shoot(peashooter)
-            });
-            if (type === 3) {
-                setTimeout(() => {
-                    shooter.timer2 = setInterval(() => {
-                        shoot(shooter)
-                    }, 2000)
-                    shoot(shooter)
-                }, 100)
-            }
-        }
+<!--        function drag(type) {-->
+<!--            if (type === 4) {-->
+<!--                let shooter = createPeashooter(type, (peashooter) => {-->
+<!--                    peashooter.timer = setInterval(() => {-->
+<!--                        // shoot(peashooter)-->
+<!--                    }, 2000)-->
+<!--                    // shoot(peashooter)-->
+<!--                });-->
+<!--                return-->
+<!--            }-->
+<!--            let shooter = createPeashooter(type, (peashooter) => {-->
+<!--                peashooter.timer = setInterval(() => {-->
+<!--                    shoot(peashooter)-->
+<!--                }, 2000)-->
+<!--                shoot(peashooter)-->
+<!--            });-->
+<!--            if (type === 3) {-->
+<!--                setTimeout(() => {-->
+<!--                    shooter.timer2 = setInterval(() => {-->
+<!--                        shoot(shooter)-->
+<!--                    }, 2000)-->
+<!--                    shoot(shooter)-->
+<!--                }, 100)-->
+<!--            }-->
+<!--        }-->
 
 
-        function eatPlantBy(zombie) {
-            for (let i in shooters) {
-                let peashooter = shooters[i]
-                if (peashooter.route === zombie.route &&
-                    peashooter.offsetLeft - 40 > zombie.offsetLeft &&
-                    peashooter.offsetLeft - 100 < zombie.offsetLeft) {
-                    peashooter.index = i
+<!--        function eatPlantBy(zombie) {-->
+<!--            for (let i in shooters) {-->
+<!--                let peashooter = shooters[i]-->
+<!--                if (peashooter.route === zombie.route &&-->
+<!--                    peashooter.offsetLeft - 40 > zombie.offsetLeft &&-->
+<!--                    peashooter.offsetLeft - 100 < zombie.offsetLeft) {-->
+<!--                    peashooter.index = i-->
 
-                    return peashooter
-                }
-            }
-            return null
-        }
-    </script>
-</html>
+<!--                    return peashooter-->
+<!--                }-->
+<!--            }-->
+<!--            return null-->
+<!--        }-->
+<!--    </script>-->
+<!--</html>-->

@@ -1,13 +1,18 @@
 class Zombie {
     constructor() {
         this.element = document.createElement('img');
-        this.element.src = 'images/Zombie.gif';
+        this.element.src = 'images/Zombie.gif?' + Math.random();
         this.element.style.position = 'absolute';
         this.row = parseInt(Math.random() * 5);
-        this.speed = 2;
-        this.blood = 9;
         this.element.style.top = 30 + this.row * 100 + 'px';
         this.element.style.left = '800px';
+
+        this.speed = 2;
+        this.blood = 9;
+
+        this.moveInterval = setInterval(() => {
+            this.step();
+        }, 1000 / 7);
         container.appendChild(this.element);
     }
 
@@ -23,17 +28,26 @@ class Zombie {
     }
 
     die() {
+        clearInterval(this.moveInterval)
         zombies = zombies.filter(item => item !== this)
-        this.element.src = 'images/ZombieDie.gif';
-        let head = document.createElement('img');
-        head.src = 'images/ZombieHead.gif';
-        head.style.position = 'absolute';
-        head.style.top = this.element.offsetTop + 'px';
-        head.style.left = this.element.offsetLeft + 'px';
-        container.appendChild(head);
+        this.element.src = 'images/ZombieDie.gif?' + Math.random();
+        new Head(this)
         setTimeout(() => {
             container.removeChild(this.element);
-            container.removeChild(head);
+        }, 2000);
+    }
+}
+
+class Head {
+    constructor(zombie) {
+        this.element = document.createElement('img');
+        this.element.src = 'images/ZombieHead.gif?' + Math.random();
+        this.element.style.position = 'absolute';
+        this.element.style.top = zombie.element.offsetTop + 'px';
+        this.element.style.left = zombie.element.offsetLeft + 'px';
+        container.appendChild(this.element);
+        setTimeout(() => {
+            container.removeChild(this.element);
         }, 1500);
     }
 }

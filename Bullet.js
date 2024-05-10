@@ -13,7 +13,7 @@ class Bullet {
         container.appendChild(this.element)
     }
 
-    step() {
+    step() { // 100/s
         this.element.style.left = (this.element.offsetLeft + 5) + 'px';
 
         if (this.element.offsetLeft > 950) {

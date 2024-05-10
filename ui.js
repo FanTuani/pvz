@@ -11,20 +11,19 @@ function drag(cardIdx) {
 
     // for plant
     let plant = document.createElement('img')
-    plant.src = cardSrc[cardIdx] + '.gif'
+    plant.src = cardSrc[cardIdx] + '.gif?' + Math.random()
     plant.cardIdx = cardIdx
     plant.style.position = 'absolute'
     // plant attributions
     plant.blood = 400
-    container.appendChild(plant)
 
     // for mouse event
     let transPlant = document.createElement('img')
     transPlant.src = plant.src
     transPlant.style.position = 'absolute'
-    transPlant.style.opacity = 0.4
+    transPlant.style.opacity = 0.5
     container.appendChild(transPlant)
-
+    container.appendChild(plant)
     document.onmousemove = function (e) {
         plant.style.top = e.y - 35 + 'px'
         plant.style.left = e.x - 35 + 'px'
