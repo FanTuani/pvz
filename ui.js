@@ -63,8 +63,7 @@ function drag(cardIdx) {
         } else {
             plant.style.top = transPlant.style.top
             plant.style.left = transPlant.style.left
-            plants.push(plant)
-            createPlant(plant)
+            plants.push(new Plant(plant))
         }
 
         container.removeChild(transPlant)
