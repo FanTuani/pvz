@@ -10,6 +10,12 @@ function createPlant(plant) {
 }
 
 function shoot(plant) {
+    let needShoot = false
+    for (let zombie of zombies) {
+        if (plant.row === zombie.row && plant.offsetLeft < zombie.offsetLeft + 40) needShoot = true
+    }
+    if (!needShoot) return
+
     let bullet = document.createElement('img')
     bullet.src = 'images/Bullet.gif'
     bullet.style.position = 'absolute'
@@ -24,6 +30,19 @@ function shoot(plant) {
         if (bullet.offsetLeft > 950) {
             bullets = bullets.filter(item => item !== bullet)
             container.removeChild(bullet)
+        }
+
+        for (let zombie of zombies) {
+            if (bullet.row !== zombie.row) continue
+            if (bullet.offsetLeft < zombie.offsetLeft + 30 ||
+                bullet.offsetLeft > zombie.offsetLeft + 120) continue
+
+            bullets = bullets.filter(item => item !== bullet)
+            bullet.src = 'images/BulletHit.gif'
+            setTimeout(function () {
+                container.removeChild(bullet)
+            }, 50)
+            break
         }
     }
 

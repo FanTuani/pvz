@@ -13,7 +13,7 @@ function spawnZombie() {
 
     zombie.row = parseInt(Math.random() * 5)
     zombie.speed = 2
-    zombie.style.top = 40 + zombie.row * 100 + 'px'
+    zombie.style.top = 30 + zombie.row * 100 + 'px'
     zombie.style.left = '800px'
 
     zombie.step = function () {
