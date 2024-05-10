@@ -45,6 +45,6 @@ class Bullet {
         this.element.src = 'images/BulletHit.gif';
         setTimeout(() => {
             container.removeChild(this.element);
-        }, 50);
+        }, 100);
     }
 }

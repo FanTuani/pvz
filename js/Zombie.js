@@ -1,14 +1,29 @@
 class Zombie {
     constructor() {
         this.element = document.createElement('img');
-        this.element.src = 'images/Zombie.gif?' + Math.random();
+        switch (parseInt(Math.random() * 3)) {
+            case 0: {
+                this.element.src = 'images/Zombie.gif?' + Math.random();
+                this.blood = 9;
+                break
+            }
+            case 1: {
+                this.element.src = 'images/ConeheadZombie.gif?' + Math.random();
+                this.blood = 19;
+                break
+            }
+            case 2: {
+                this.element.src = 'images/BucketheadZombie.gif?' + Math.random();
+                this.blood = 29;
+                break
+            }
+        }
         this.element.style.position = 'absolute';
         this.row = parseInt(Math.random() * 5);
         this.element.style.top = 30 + this.row * 100 + 'px';
         this.element.style.left = '800px';
 
         this.speed = 2;
-        this.blood = 9;
 
         this.moveInterval = setInterval(() => {
             this.step();
@@ -26,11 +41,25 @@ class Zombie {
         }
         if (eatPlant) {
             eatPlant.damage(1)
-            if (this.element.src.includes('Zombie.gif'))
-                this.element.src = 'images/ZombieAttack.gif?' + Math.random()
+            if (this.element.src.includes('Zombie.gif')) {
+                if (this.element.src.includes('Cone')) {
+                    this.element.src = 'images/ConeheadZombieAttack.gif?' + Math.random()
+                } else if (this.element.src.includes('Bucket')) {
+                    this.element.src = 'images/BucketheadZombieAttack.gif?' + Math.random()
+                } else {
+                    this.element.src = 'images/ZombieAttack.gif?' + Math.random()
+                }
+            }
         } else {
-            if (this.element.src.includes('ZombieAttack.gif'))
-                this.element.src = 'images/Zombie.gif?' + Math.random()
+            if (this.element.src.includes('ZombieAttack.gif')) {
+                if (this.element.src.includes('Cone')) {
+                    this.element.src = 'images/ConeheadZombie.gif?' + Math.random()
+                } else if (this.element.src.includes('Bucket')) {
+                    this.element.src = 'images/BucketheadZombie.gif?' + Math.random()
+                } else {
+                    this.element.src = 'images/Zombie.gif?' + Math.random()
+                }
+            }
             this.element.style.left = this.element.offsetLeft - this.speed + 'px';
         }
     }

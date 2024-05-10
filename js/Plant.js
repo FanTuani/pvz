@@ -47,6 +47,14 @@ class Plant {
         setTimeout(() => {
             damageText.style.opacity = 0; // 一段时间后再将其设置为不可见
         }, 1000);
+        if (this.element.src.includes('Tall')) {
+            if (this.blood > 60 && this.blood < 120 && !this.element.src.includes('Cracked1')) {
+                this.element.src = 'images/TallnutCracked1.gif'
+            }
+            if (this.blood < 60 && !this.element.src.includes('Cracked2')) {
+                this.element.src = 'images/TallnutCracked2.gif'
+            }
+        }
     }
 
     die() {
