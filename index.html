@@ -20,10 +20,6 @@
             left: 0;
         }
     </style>
-    <script>
-        plants = []
-    </script>
-    <script src="ui.js"></script>
     <body ondragstart="return false">
         <div id="container">
             <img id="background" src="images/Background.jpg">
@@ -33,4 +29,25 @@
             <img class="card" style="top: 180px" onclick="drag(3)" src="images/TallNut.png">
         </div>
     </body>
+    <script src="ui.js"></script>
+    <script src="zombie.js"></script>
+    <script src="plant.js"></script>
+    <script>
+        let cardSrc = ['images/Peashooter', 'images/SnowPea', 'images/Repeater', 'images/TallNut']
+        let plants = [], zombies = [], bullets = []
+
+        window.onload = function () {
+            startSpawnZombies(20)
+            let zombieStepInv = setInterval(function () {
+                for (let zombie of zombies) {
+                    zombie.step()
+                }
+            }, 1000 / 8)
+            let bulletStepInv = setInterval(function () {
+                for (let bullet of bullets) {
+                    bullet.step()
+                }
+            }, 1000 / 120)
+        }
+    </script>
 </html>

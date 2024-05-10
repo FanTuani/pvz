@@ -1,5 +1,3 @@
-cardSrc = ['images/Peashooter', 'images/SnowPea', 'images/Repeater', 'images/TallNut']
-
 function drag(cardIdx) {
     // for card
     let cards = document.getElementsByClassName('card')
@@ -14,6 +12,7 @@ function drag(cardIdx) {
     // for plant
     let plant = document.createElement('img')
     plant.src = cardSrc[cardIdx] + '.gif'
+    plant.cardIdx = cardIdx
     plant.style.position = 'absolute'
     // plant attributions
     plant.blood = 400
@@ -65,6 +64,7 @@ function drag(cardIdx) {
             plant.style.top = transPlant.style.top
             plant.style.left = transPlant.style.left
             plants.push(plant)
+            createPlant(plant)
         }
 
         container.removeChild(transPlant)
