@@ -3,7 +3,7 @@ class Plant {
         this.element = plant;
         this.shootable = plant.cardIdx < 3;
         this.boomable = plant.cardIdx === 5 || plant.cardIdx === 6
-        this.sunable = plant.cardIdx === 4
+        this.sunable = plant.cardIdx === 4 || plant.cardIdx === 8
         this.row = plant.row;
         this.column = plant.column;
         this.blood = (plant.cardIdx === 3) ? 200 : 30;
@@ -30,11 +30,24 @@ class Plant {
         sun.style.position = 'absolute'
         sun.style.top = this.element.offsetTop + 'px'
         sun.style.left = this.element.offsetLeft + 'px'
+        let sun2 = null
+        if (this.element.src.includes('Twin')) {
+            sun2 = document.createElement('img')
+            sun2.src = 'images/Sun.gif'
+            sun2.style.position = 'absolute'
+            sun2.style.top = this.element.offsetTop + 'px'
+            sun2.style.left = this.element.offsetLeft + 30 + 'px'
+        }
         container.appendChild(sun)
+        if (sun2) container.appendChild(sun2)
         let sunMoveInv = setInterval(() => {
             sun.style.top = sun.offsetTop - 2 + 'px'
+            if (sun2) {
+                sun2.style.top = sun2.offsetTop - 2 + 'px'
+            }
             if (sun.offsetTop <= 0) {
                 clearInterval(sunMoveInv)
+                if (sun2) container.removeChild(sun2)
                 container.removeChild(sun)
             }
         }, 5)
