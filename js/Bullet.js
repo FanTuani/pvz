@@ -10,6 +10,7 @@ class Bullet {
         this.element.style.top = shooter.element.offsetTop + 'px';
         this.element.style.left = shooter.element.offsetLeft + 35 + 'px';
         this.row = shooter.row;
+        this.fire = false
 
         this.moveInterval = setInterval(() => {
             this.step();
@@ -25,24 +26,38 @@ class Bullet {
             return;
         }
 
+        for (let plant of plants) {
+            if (!plant.element.src.includes('Torch')) continue
+            if (this.row !== plant.row) continue
+            if (this.element.offsetLeft < plant.element.offsetLeft + 30 ||
+                this.element.offsetLeft > plant.element.offsetLeft + 60) continue
+
+            this.fire = true
+            this.element.src = 'images/FireBullet.gif?' + Math.random()
+        }
+
         for (let zombie of zombies) {
-            if (this.row !== zombie.row) continue;
+            if (this.row !== zombie.row) continue
             if (this.element.offsetLeft < zombie.element.offsetLeft + 30 ||
-                this.element.offsetLeft > zombie.element.offsetLeft + 120) continue;
+                this.element.offsetLeft > zombie.element.offsetLeft + 120) continue
 
             this.destroy();
-            zombie.damage(1);
-            if (this.shooter.element.src.includes('SnowPea.gif')) {
+            zombie.damage(this.fire ? 2 : 1);
+            if (this.shooter.element.src.includes('SnowPea.gif') && !this.fire) {
                 zombie.speed = 1
             }
-            break;
+            break
         }
     }
 
     destroy() {
         clearInterval(this.moveInterval);
         bullets = bullets.filter(item => item !== this);
-        this.element.src = 'images/BulletHit.gif';
+        if (this.element.src.includes('FireBullet')) {
+            this.element.src = 'images/SputteringFire.gif'
+        } else {
+            this.element.src = 'images/BulletHit.gif';
+        }
         setTimeout(() => {
             container.removeChild(this.element);
         }, 100);
