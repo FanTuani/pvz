@@ -112,11 +112,3 @@ class Head {
         }, 1500);
     }
 }
-
-function startSpawnZombies(num, inv) {
-    let cnt = 0;
-    let intervalId = setInterval(() => {
-        zombies.push(new Zombie());
-        if (++cnt >= num) clearInterval(intervalId);
-    }, inv);
-}

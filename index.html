@@ -37,6 +37,8 @@
     <script src="js/Zombie.js"></script>
     <script src="js/Plant.js"></script>
     <script src="js/Bullet.js"></script>
+    <script src="js/LawnMower.js"></script>
+    <script src="js/game.js"></script>
     <script>
         let container = document.getElementById('container')
         let cardSrc = ['images/Peashooter', 'images/SnowPea', 'images/Repeater', 'images/TallNut',
@@ -45,13 +47,14 @@
         let killedZombies = 0
 
         window.onload = function () {
+            spawnLawnMower()
             // let zombieNum = window.prompt("the number of zombies you want to challenge", 10);
             let zombieNum = 20
-            startSpawnZombies(zombieNum, 500)
+            startSpawnZombies(zombieNum, 2000)
 
             let checkWinInv = setInterval(() => {
                 for (let zombie of zombies) {
-                    if (zombie.element.offsetLeft < 50) {
+                    if (zombie.element.offsetLeft < 0) {
                         alert('lose')
                         location.reload()
                         clearInterval(checkWinInv)
