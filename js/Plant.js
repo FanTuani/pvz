@@ -66,7 +66,7 @@ class Plant {
             }, 1500)
             for (let zombie of zombies) {
                 if (zombie.row === this.row) {
-                    zombie.damage(zombie.blood)
+                    zombie.damage(zombie.blood, 'fire')
                 }
             }
         } else if (this.element.src.includes('CherryBomb')) {
@@ -84,7 +84,7 @@ class Plant {
             for (let zombie of zombies) {
                 if (Math.abs(zombie.row - this.row) < 2 &&
                     Math.abs(zombie.element.offsetLeft + 50 - this.element.offsetLeft) < 150) {
-                    zombie.damage(zombie.blood)
+                    zombie.damage(zombie.blood, 'fire')
                 }
             }
         }

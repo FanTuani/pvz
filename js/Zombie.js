@@ -64,7 +64,7 @@ class Zombie {
         }
     }
 
-    damage(damage) {
+    damage(damage, cause) {
         this.blood -= damage;
         this.element.classList.add('damageEff')
         setTimeout(() => {
@@ -72,7 +72,7 @@ class Zombie {
         }, 100)
 
         if (this.blood <= 0) {
-            this.die();
+            this.die(cause);
         }
 
         let damageText = document.createElement('p');
@@ -87,11 +87,15 @@ class Zombie {
         }, 1000);
     }
 
-    die() {
+    die(cause) {
         clearInterval(this.moveInterval)
         zombies = zombies.filter(item => item !== this)
-        this.element.src = 'images/ZombieDie.gif?' + Math.random();
-        new Head(this)
+        if (cause && cause.includes('fire')) {
+            this.element.src = 'images/BoomDie.gif?' + Math.random();
+        } else {
+            this.element.src = 'images/ZombieDie.gif?' + Math.random();
+            new Head(this)
+        }
         setTimeout(() => {
             container.removeChild(this.element);
         }, 2000);
